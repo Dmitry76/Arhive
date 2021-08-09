@@ -6,3 +6,5 @@ a[len(a)-1] = a[0]
 a[0] = last_a
 a.append(int(first_a) + int(last_a))
 print(a)
+b=15
+print(b)
