@@ -3,7 +3,7 @@ import random
 
 # СОЗДАЕМ ЧИСТЫЙ ЛИСТ
 paper = {'00': '-', '01': '-', '02': '-', '10': '-', '11': '-', '12': '-', '20': '-', '21': '-', '22': '-'}
-fields = ('00', '01', '02', '10', '11', '12', '20', '21', '22')
+fields = ('00', '01', '02', '10', '11', '12', '20', '21', '22') # КОРТЕЖ С ЯЧЕЙКАМИ ИГРОВОГО ПОЛЯ
 game_status = 'start'  # устанавливаем начальный статус
 game_result = ''
 last_action = {'11': '02', '12': '00', '13': '01',
@@ -22,7 +22,7 @@ second_action = {'11': ['01', '02'], '12': ['00', '02'], '13': ['00', '01'],
                  '51': ['11', '21'], '52': ['01', '21'], '53': ['01', '11'],
                  '61': ['12', '22'], '62': ['02', '22'], '63': ['02', '12'],
                  '71': ['11', '22'], '72': ['00', '22'], '73': ['00', '11'],
-                 '81': ['11', '02'], '82': ['20', '02'], '83': ['20', '11']}  # ВАРИАНТЫ ТОРОГО ХОДА
+                 '81': ['11', '02'], '82': ['20', '02'], '83': ['20', '11']}  # ВАРИАНТЫ ВТОРОГО ХОДА
 
 
 # ФУНКЦИИ:
@@ -112,9 +112,9 @@ while game_status == 'start':
             comp_action = '1'  # ХОД сделан
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
-        # print('#3 Комбинации:', result)
+
         # 3. Если есть вариант закончить с победой: 'XX-', '-XX' или 'X-X', то заканчиваем игру
-        # print('# 3.', comp_action)
+
         for i in range(0, len(result)):
             if result[i] == comp[0] + comp[0] + '-' and comp_action == '0':  ## XX-
                 comp.append(last_action[str(i + 1) + '1'])
@@ -122,46 +122,40 @@ while game_status == 'start':
                 comp_action = '1'  # ХОД сделан
                 game_result = '\nМоя взяла!!!'
                 game_status = 'END'  # статус для выхода из цикла
-                # print('XX- Статистика ходов компа:', comp)
             if result[i] == '-' + comp[0] + comp[0] and comp_action == '0':  ## -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
                 comp_action = '1'  # ХОД сделан
                 game_result = '\nМоя взяла!!!'
                 game_status = 'END'  # статус для выхода из цикла
-                # print('-XX Статистика ходов компа:', comp)
+
             if result[i] == comp[0] + '-' + comp[0] and comp_action == '0':  ## X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
                 comp_action = '1'  # ХОД сделан
                 game_result = '\nМоя взяла!!!'
                 game_status = 'END'  # статус для выхода из цикла
-                # print('X-X Статистика ходов компа:', comp)
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
-        # print('#4 Комбинации:', result)
-        # print('# 4.', comp_action)
+
         # 4. Если игрок близок к победе: 'XX-', '-XX' или 'X-X', то закрываем пустое место
         for i in range(0, len(result)):
             if result[i] == gamer[0] + gamer[0] + '-' and comp_action == '0':  ## XX-
                 comp.append(last_action[str(i + 1) + '1'])
                 paper[last_action[str(i + 1) + '1']] = comp[0]
                 comp_action = '1'  # ХОД сделан
-                # print('XX- Статистика ходов компа:', comp)
+
             if result[i] == '-' + gamer[0] + gamer[0] and comp_action == '0':  ## -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
                 comp_action = '1'  # ХОД сделан
-                # print('-XX Статистика ходов компа:', comp)
+
             if result[i] == gamer[0] + '-' + gamer[0] and comp_action == '0':  ## X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
                 comp_action = '1'  # ХОД сделан
-                # print('X-X Статистика ходов компа:', comp)
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
-        # print('#5 Комбинации:', result)
-        # print('# 5.', comp_action)
         # 5. Продолжаем любой вариант: 'X--', '-X-' или '--X'
         varik = []
         for i in range(0, len(result)):
