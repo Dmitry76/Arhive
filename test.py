@@ -8,3 +8,7 @@ a.append(int(first_a) + int(last_a))
 print(a)
 b=15
 print(b)
+"""
+комментарий многострочный
+вот еще одна строка
+"""
