@@ -112,7 +112,6 @@ while game_status == 'start':
             comp_action = '1'  # ХОД сделан
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
-
         # 3. Если есть вариант закончить с победой: 'XX-', '-XX' или 'X-X', то заканчиваем игру
 
         for i in range(0, len(result)):
@@ -137,8 +136,8 @@ while game_status == 'start':
                 game_status = 'END'  # статус для выхода из цикла
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
-
         # 4. Если игрок близок к победе: 'XX-', '-XX' или 'X-X', то закрываем пустое место
+
         for i in range(0, len(result)):
             if result[i] == gamer[0] + gamer[0] + '-' and comp_action == '0':  ## XX-
                 comp.append(last_action[str(i + 1) + '1'])
@@ -157,6 +156,7 @@ while game_status == 'start':
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
         # 5. Продолжаем любой вариант: 'X--', '-X-' или '--X'
+
         varik = []
         for i in range(0, len(result)):
             if result[i] == comp[0] + '--' and comp_action == '0':  ## X--
@@ -186,11 +186,6 @@ while game_status == 'start':
             rnd = random.random()
             comp.append(varik[int(rnd*len(varik) // 1)])
             paper[varik[int(rnd*len(varik) // 1)]] = comp[0]
-        # print('Варианты хода компа: ', str(varik))
-    # ТЕСТИРОВАНИЕ ВНУТРИ ЦИКЛА========================================
-    # print(result)
-    # print('Элементов в списке: ' + str(len(gamer)) + '\n' + str(gamer))
-    # =================================================================
 
 # ВЫВОД РЕЗУЛЬТАТА ИГРЫ
 print(game_result)
