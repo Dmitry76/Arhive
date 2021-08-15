@@ -75,7 +75,9 @@ while game_status == 'start':
     print('ВНИМАНИЕ! НЕВЕРНЫЕ КООРДИНАТЫ = ПРОПУСК ХОДА!!!')
     gamer_action = str(input('Ваш ход: '))
     gamer.append(gamer_action)
-    comp_action = '0'  # ХОД не сделан
+
+    comp_action = '0'  # ХОД КОМПЬЮТЕРА НЕ СДЕЛАН
+
     # ПРОВЕРКА ЗАНЯТО ЛИ МЕСТО КОМПЬЮТЕРОМ
     for x in comp:
         if x == gamer_action:
@@ -92,10 +94,10 @@ while game_status == 'start':
     for x in result:
         if x == str(gamer[0] + gamer[0] + gamer[0]):
             game_result = '\nПОЗДРАВЛЯЮ! Победа за Вами!!!'
-            game_status = 'END'  # статус для выхода из цикла
+            game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
         if x == str(comp[0] + comp[0] + comp[0]):
             game_result = '\nМоя взяла!!!'
-            game_status = 'END'  # статус для выхода из цикла
+            game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
     # ==========================================================
 
     # ГЕНЕРАТОР ХОДА КОМПЬЮТЕРА
@@ -106,7 +108,7 @@ while game_status == 'start':
         if result[1][1] == '-':
             comp.append('11')
             paper['11'] = comp[0]
-            comp_action = '1'  # ХОД сделан
+            comp_action = '1'  # ХОД СДЕЛАН
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
         # 3. Если есть вариант закончить с победой: 'XX-', '-XX' или 'X-X', то заканчиваем игру
@@ -115,22 +117,22 @@ while game_status == 'start':
             if result[i] == comp[0] + comp[0] + '-' and comp_action == '0':  ## XX-
                 comp.append(last_action[str(i + 1) + '1'])
                 paper[last_action[str(i + 1) + '1']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
                 game_result = '\nМоя взяла!!!'
-                game_status = 'END'  # статус для выхода из цикла
+                game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
             if result[i] == '-' + comp[0] + comp[0] and comp_action == '0':  ## -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
                 game_result = '\nМоя взяла!!!'
-                game_status = 'END'  # статус для выхода из цикла
+                game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
 
             if result[i] == comp[0] + '-' + comp[0] and comp_action == '0':  ## X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
                 game_result = '\nМоя взяла!!!'
-                game_status = 'END'  # статус для выхода из цикла
+                game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
         # 4. Если игрок близок к победе: 'XX-', '-XX' или 'X-X', то закрываем пустое место
@@ -139,17 +141,17 @@ while game_status == 'start':
             if result[i] == gamer[0] + gamer[0] + '-' and comp_action == '0':  ## XX-
                 comp.append(last_action[str(i + 1) + '1'])
                 paper[last_action[str(i + 1) + '1']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
 
             if result[i] == '-' + gamer[0] + gamer[0] and comp_action == '0':  ## -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
 
             if result[i] == gamer[0] + '-' + gamer[0] and comp_action == '0':  ## X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
-                comp_action = '1'  # ХОД сделан
+                comp_action = '1'  # ХОД СДЕЛАН
 
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
         # 5. Продолжаем любой вариант: 'X--', '-X-' или '--X'
@@ -159,15 +161,12 @@ while game_status == 'start':
             if result[i] == comp[0] + '--' and comp_action == '0':  ## X--
                 for ii in second_action[str(i + 1) + '1']:
                     varik.append(ii)
-                    # print('X--', ii)
             if result[i] == '-' + comp[0] + '-' and comp_action == '0':  ## -X-
                 for ii in second_action[str(i + 1) + '2']:
                     varik.append(ii)
-                    # print('-X-', ii)
             if result[i] == '--' + comp[0] and comp_action == '0':  ## --X
                 for ii in second_action[str(i + 1) + '3']:
                     varik.append(ii)
-                    # print('--X', ii)
         if not varik and comp_action == '0':
             for i in fields:
                 if paper[i] == '-':
