@@ -2,6 +2,7 @@
 import random
 
 # ПЕРЕМЕННЫЕ
+game_result = ''
 
 game_status = 'start'  # ЗНАЧЕНИЕ ДЛЯ ЗАПУСКА ЦИКЛА
 
@@ -29,6 +30,7 @@ second_action = {'11': ['01', '02'], '12': ['00', '02'], '13': ['00', '01'],  # 
                  '71': ['11', '22'], '72': ['00', '22'], '73': ['00', '11'],
                  '81': ['11', '02'], '82': ['20', '02'], '83': ['20', '11']}
 
+
 # ФУНКЦИИ:
 
 # ==ВЕРСТКА ИГРОВОГО ПОЛЯ ДЛЯ ВЫВОДА В КОНСОЛЬ
@@ -39,6 +41,7 @@ def show_paper():
     a += paper['10'] + ' | ' + paper['11'] + ' | ' + paper['12'] + ' | \n  -------------\n2 | '
     a += paper['20'] + ' | ' + paper['21'] + ' | ' + paper['22'] + ' | \n  -------------\n'
     return a
+
 
 # ==СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
 def result_scan():
@@ -115,20 +118,20 @@ while game_status == 'start':
         # 3. Если есть вариант закончить с победой: 'XX-', '-XX' или 'X-X', то заканчиваем игру
 
         for i in range(0, len(result)):
-            if result[i] == comp[0] + comp[0] + '-' and comp_action == '0':  ## XX-
+            if result[i] == comp[0] + comp[0] + '-' and comp_action == '0':  # XX-
                 comp.append(last_action[str(i + 1) + '1'])
                 paper[last_action[str(i + 1) + '1']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
                 game_result = '\nМоя взяла!!!'
                 game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
-            if result[i] == '-' + comp[0] + comp[0] and comp_action == '0':  ## -XX
+            if result[i] == '-' + comp[0] + comp[0] and comp_action == '0':  # -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
                 game_result = '\nМоя взяла!!!'
                 game_status = 'END'  # СТАТУС ДЛЯ ВЫХОДА ИЗ ЦИКЛА
 
-            if result[i] == comp[0] + '-' + comp[0] and comp_action == '0':  ## X-X
+            if result[i] == comp[0] + '-' + comp[0] and comp_action == '0':  # X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
@@ -139,17 +142,17 @@ while game_status == 'start':
         # 4. Если игрок близок к победе: 'XX-', '-XX' или 'X-X', то закрываем пустое место
 
         for i in range(0, len(result)):
-            if result[i] == gamer[0] + gamer[0] + '-' and comp_action == '0':  ## XX-
+            if result[i] == gamer[0] + gamer[0] + '-' and comp_action == '0':  # XX-
                 comp.append(last_action[str(i + 1) + '1'])
                 paper[last_action[str(i + 1) + '1']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
 
-            if result[i] == '-' + gamer[0] + gamer[0] and comp_action == '0':  ## -XX
+            if result[i] == '-' + gamer[0] + gamer[0] and comp_action == '0':  # -XX
                 comp.append(last_action[str(i + 1) + '2'])
                 paper[last_action[str(i + 1) + '2']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
 
-            if result[i] == gamer[0] + '-' + gamer[0] and comp_action == '0':  ## X-X
+            if result[i] == gamer[0] + '-' + gamer[0] and comp_action == '0':  # X-X
                 comp.append(last_action[str(i + 1) + '3'])
                 paper[last_action[str(i + 1) + '3']] = comp[0]
                 comp_action = '1'  # ХОД СДЕЛАН
@@ -157,32 +160,32 @@ while game_status == 'start':
         result = result_scan()  # СКАНИРОВАНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
         # 5. Продолжаем любой вариант: 'X--', '-X-' или '--X'
 
-        varik = []
+        var_action = []
         for i in range(0, len(result)):
-            if result[i] == comp[0] + '--' and comp_action == '0':  ## X--
+            if result[i] == comp[0] + '--' and comp_action == '0':  # X--
                 for ii in second_action[str(i + 1) + '1']:
-                    varik.append(ii)
-            if result[i] == '-' + comp[0] + '-' and comp_action == '0':  ## -X-
+                    var_action.append(ii)
+            if result[i] == '-' + comp[0] + '-' and comp_action == '0':  # -X-
                 for ii in second_action[str(i + 1) + '2']:
-                    varik.append(ii)
-            if result[i] == '--' + comp[0] and comp_action == '0':  ## --X
+                    var_action.append(ii)
+            if result[i] == '--' + comp[0] and comp_action == '0':  # --X
                 for ii in second_action[str(i + 1) + '3']:
-                    varik.append(ii)
-        if not varik and comp_action == '0':
+                    var_action.append(ii)
+        if not var_action and comp_action == '0':
             for i in fields:
                 if paper[i] == '-':
-                    varik.append(i)
-            if not varik and comp_action == '0':
+                    var_action.append(i)
+            if not var_action and comp_action == '0':
                 game_result = '\nПохоже ничья...'
                 game_status = 'END'  # статус для выхода из цикла
-            elif varik and comp_action == '0':
+            elif var_action and comp_action == '0':
                 rnd = random.random()
-                comp.append(varik[int(rnd * len(varik) // 1)])
-                paper[varik[int(rnd * len(varik) // 1)]] = comp[0]
-        elif varik and comp_action == '0':
+                comp.append(var_action[int(rnd * len(var_action) // 1)])
+                paper[var_action[int(rnd * len(var_action) // 1)]] = comp[0]
+        elif var_action and comp_action == '0':
             rnd = random.random()
-            comp.append(varik[int(rnd*len(varik) // 1)])
-            paper[varik[int(rnd*len(varik) // 1)]] = comp[0]
+            comp.append(var_action[int(rnd * len(var_action) // 1)])
+            paper[var_action[int(rnd * len(var_action) // 1)]] = comp[0]
 
 # ВЫВОД РЕЗУЛЬТАТА ИГРЫ
 print(game_result)
